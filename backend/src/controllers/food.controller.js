@@ -1,6 +1,6 @@
 const foodModel = require('../models/food.model');
 const storageService = require('../service/sotrage.service');
-const{ v4: uuid } = require('uuid');
+const{ v5: uuid } = require('uuid');
 
 
 async function createFood(req, res) {

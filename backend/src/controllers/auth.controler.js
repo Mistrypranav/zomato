@@ -28,7 +28,8 @@ async function register (req, res) {
 
     res.cookie("token", token);
 
-    res.status(201).json({
+    res.status(200).json({
+        success: true,
         message: "User registered successfully",
         user: {
             id: newUser._id,
@@ -44,12 +45,12 @@ async function loginUser (req, res) {
     const existingUser = await userModel.findOne({email});
 
     if(!existingUser){
-        return res.status(400).json({message: "Invalid credentials"});
+        return res.status(401).json({success: false, message: "Invalid credentials"});
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
     if(!isPasswordCorrect){
-        return res.status(400).json({message: "Invalid credentials"});
+        return res.status(401).json({success: false, message: "Invalid credentials"});
     }
 
     const token = jwt.sign({
@@ -60,6 +61,7 @@ async function loginUser (req, res) {
     res.cookie("token", token);
 
     res.status(200).json({
+        success: true,
         message: "User logged in successfully",
         user: {
             id: existingUser._id,
@@ -88,6 +90,7 @@ async function registerFoodPartner(req, res) {
 
     if (isAccountAlreadyExists) {
         return res.status(400).json({
+            success: false,
             message: "Food partner account already exists"
         })
     }
@@ -109,7 +112,8 @@ async function registerFoodPartner(req, res) {
 
     res.cookie("token", token)
 
-    res.status(201).json({
+    res.status(200).json({
+        success: true,
         message: "Food partner registered successfully",
         foodPartner: {
             _id: foodPartner._id,
@@ -132,7 +136,8 @@ async function loginFoodPartner(req, res) {
     })
 
     if (!foodPartner) {
-        return res.status(400).json({
+        return res.status(401).json({
+            success: false,
             message: "Invalid email or password"
         })
     }
@@ -140,7 +145,8 @@ async function loginFoodPartner(req, res) {
     const isPasswordValid = await bcrypt.compare(password, foodPartner.password);
 
     if (!isPasswordValid) {
-        return res.status(400).json({
+        return res.status(401).json({
+            success: false,
             message: "Invalid email or password"
         })
     }
@@ -152,6 +158,7 @@ async function loginFoodPartner(req, res) {
     res.cookie("token", token)
 
     res.status(200).json({
+        success: true,
         message: "Food partner logged in successfully",
         foodPartner: {
             _id: foodPartner._id,
