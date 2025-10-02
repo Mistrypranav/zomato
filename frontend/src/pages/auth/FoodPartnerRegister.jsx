@@ -38,7 +38,7 @@ const FoodPartnerRegister = () => {
       //  Success response
       if (response.data.success) {
         Swal.fire("Success", response.data.message, "success");
-        navigate("/");
+        navigate("/create-food");
       } else {
         Swal.fire("Error", response.data.message, "error");
       }

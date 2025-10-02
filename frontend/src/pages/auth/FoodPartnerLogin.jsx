@@ -23,7 +23,7 @@ const FoodPartnerLogin = () => {
           );
           if(response.data.success){
             console.log(response.data);
-            // navigate("/");
+            navigate("/create-food");
             
               }else{
                 Swal.fire({icon: "error",title: "Login Failed",text: response.data.message || "Invalid credentials",});
